@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { ButtonList } from './ButtonList';
+import { FeedbackOptions } from './FeedbackOptions';
 import { Notification } from './Notification';
 import { Statistics } from './Statistics';
 
@@ -25,7 +25,7 @@ export class App extends Component {
     return values.reduce((a, b) => (a += b), 0);
   };
 
-  positiveFeedback = () => {
+  positivePercentage = () => {
     const count = (this.state.good / this.countTotal()) * 100;
     const percent = Number.parseInt(count);
     return this.state.good !== 0 ? percent + '%' : '0%';
@@ -36,7 +36,10 @@ export class App extends Component {
 
     return (
       <Section title="Please leave feedback">
-        <ButtonList options={buttonText} onButtonFeedback={this.doStatValue} />
+        <FeedbackOptions
+          options={buttonText}
+          onLeaveFeedback={this.doStatValue}
+        />
         <>{renderStatistics(this)}</>
       </Section>
     );
@@ -55,7 +58,7 @@ function renderStatistics(params) {
             neutral={neutral}
             bad={bad}
             total={params.countTotal()}
-            positiveFeedback={params.positiveFeedback()}
+            positivePercentage={params.positivePercentage()}
           />
         </Section>
       ) : (
